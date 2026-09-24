@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.carwash.order.controller.OrderControllerTest
+-------------------------------------------------------------------------------
+Tests run: 19, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.514 s -- in com.carwash.order.controller.OrderControllerTest

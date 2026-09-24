@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.carwash.payment.service.PdfServiceTest
+-------------------------------------------------------------------------------
+Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.289 s -- in com.carwash.payment.service.PdfServiceTest

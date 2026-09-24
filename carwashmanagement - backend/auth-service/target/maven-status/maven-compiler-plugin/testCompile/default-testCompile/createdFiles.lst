@@ -1,0 +1,2 @@
+com\carwash\auth\exception\InvalidCredentialsExceptionTest.class
+com\carwash\auth\exception\UserNotFoundExceptionTest.class

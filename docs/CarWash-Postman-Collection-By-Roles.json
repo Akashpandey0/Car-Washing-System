@@ -1,0 +1,672 @@
+{
+	"info": {
+		"name": "Car Wash Management - Role Based",
+		"description": "Complete API collection organized by user roles (ADMIN, CUSTOMER, WASHER, PUBLIC)\n\n**Base URL:** http://localhost:8080\n\n**Roles:**\n- PUBLIC: No token required\n- CUSTOMER: Customer role token required\n- WASHER: Washer role token required\n- ADMIN: Admin role token required",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://localhost:8080",
+			"type": "string"
+		},
+		{
+			"key": "admin_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "customer_token",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "washer_token",
+			"value": "",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "PUBLIC (No Token Required)",
+			"description": "Endpoints accessible without authentication",
+			"item": [
+				{
+					"name": "Auth Service",
+					"item": [
+						{
+							"name": "Register Customer",
+							"request": {
+								"method": "POST",
+								"header": [{"key": "Content-Type", "value": "application/json"}],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"username\": \"customer1\",\n  \"password\": \"password123\",\n  \"email\": \"customer1@example.com\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/auth/register/CUSTOMER",
+									"host": ["{{base_url}}"],
+									"path": ["api", "auth", "register", "CUSTOMER"]
+								},
+								"description": "Register new customer account - No token required"
+							}
+						},
+						{
+							"name": "Register Washer",
+							"request": {
+								"method": "POST",
+								"header": [{"key": "Content-Type", "value": "application/json"}],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"username\": \"washer1\",\n  \"password\": \"password123\",\n  \"email\": \"washer1@example.com\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/auth/register/WASHER",
+									"host": ["{{base_url}}"],
+									"path": ["api", "auth", "register", "WASHER"]
+								},
+								"description": "Register new washer account - No token required"
+							}
+						},
+						{
+							"name": "Login Customer",
+							"request": {
+								"method": "POST",
+								"header": [{"key": "Content-Type", "value": "application/json"}],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"username\": \"customer1\",\n  \"password\": \"password123\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/auth/login/CUSTOMER",
+									"host": ["{{base_url}}"],
+									"path": ["api", "auth", "login", "CUSTOMER"]
+								},
+								"description": "Login as customer - No token required"
+							}
+						},
+						{
+							"name": "Login Washer",
+							"request": {
+								"method": "POST",
+								"header": [{"key": "Content-Type", "value": "application/json"}],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"username\": \"washer1\",\n  \"password\": \"password123\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/auth/login/WASHER",
+									"host": ["{{base_url}}"],
+									"path": ["api", "auth", "login", "WASHER"]
+								},
+								"description": "Login as washer - No token required"
+							}
+						},
+						{
+							"name": "Login Admin",
+							"request": {
+								"method": "POST",
+								"header": [{"key": "Content-Type", "value": "application/json"}],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"username\": \"admin\",\n  \"password\": \"admin123\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/auth/login/ADMIN",
+									"host": ["{{base_url}}"],
+									"path": ["api", "auth", "login", "ADMIN"]
+								},
+								"description": "Login as admin - No token required"
+							}
+						},
+						{
+							"name": "Validate Token",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/api/auth/validate?token=YOUR_TOKEN_HERE",
+									"host": ["{{base_url}}"],
+									"path": ["api", "auth", "validate"],
+									"query": [{"key": "token", "value": "YOUR_TOKEN_HERE"}]
+								},
+								"description": "Validate JWT token - No token required"
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "ADMIN Role",
+			"description": "Endpoints requiring ADMIN role token",
+			"item": [
+				{
+					"name": "Auth Service",
+					"item": [
+						{
+							"name": "Admin Register User",
+							"request": {
+								"method": "POST",
+								"header": [
+									{"key": "Content-Type", "value": "application/json"},
+									{"key": "Authorization", "value": "Bearer {{admin_token}}"}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"username\": \"newuser\",\n  \"password\": \"password123\",\n  \"email\": \"newuser@example.com\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/auth/admin/register/CUSTOMER",
+									"host": ["{{base_url}}"],
+									"path": ["api", "auth", "admin", "register", "CUSTOMER"]
+								},
+								"description": "Admin registers new user - ADMIN token required"
+							}
+						},
+						{
+							"name": "Admin Register Admin",
+							"request": {
+								"method": "POST",
+								"header": [
+									{"key": "Content-Type", "value": "application/json"},
+									{"key": "Authorization", "value": "Bearer {{admin_token}}"}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"username\": \"admin2\",\n  \"password\": \"admin123\",\n  \"email\": \"admin2@example.com\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/auth/admin/register/ADMIN",
+									"host": ["{{base_url}}"],
+									"path": ["api", "auth", "admin", "register", "ADMIN"]
+								},
+								"description": "Admin registers new admin - ADMIN token required"
+							}
+						},
+						{
+							"name": "Delete User (Admin)",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{"key": "Content-Type", "value": "text/plain"},
+									{"key": "Authorization", "value": "Bearer {{admin_token}}"}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "customer1"
+								},
+								"url": {
+									"raw": "{{base_url}}/api/auth/delete",
+									"host": ["{{base_url}}"],
+									"path": ["api", "auth", "delete"]
+								},
+								"description": "Admin deletes any user (Customer/Washer/Admin) - ADMIN token required, username in body"
+							}
+						}
+					]
+				},
+				{
+					"name": "Car Service",
+					"item": [
+						{
+							"name": "Register Car (Admin)",
+							"request": {
+								"method": "POST",
+								"header": [
+									{"key": "Content-Type", "value": "application/json"},
+									{"key": "Authorization", "value": "Bearer {{admin_token}}"}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"licensePlate\": \"ABC123\",\n  \"make\": \"Toyota\",\n  \"model\": \"Camry\",\n  \"year\": 2022,\n  \"color\": \"Blue\",\n  \"type\": \"SEDAN\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/cars",
+									"host": ["{{base_url}}"],
+									"path": ["cars"]
+								},
+								"description": "Register new car - ADMIN token required (customerUsername auto-extracted from token)"
+							}
+						},
+						{
+							"name": "Get All Cars",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/cars",
+									"host": ["{{base_url}}"],
+									"path": ["cars"]
+								},
+								"description": "Get all cars (admin function) - No token required"
+							}
+						},
+						{
+							"name": "Get Car by License Plate",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/cars/ABC123",
+									"host": ["{{base_url}}"],
+									"path": ["cars", "ABC123"]
+								},
+								"description": "Get car by license plate - No token required"
+							}
+						},
+						{
+							"name": "Get Cars by Owner",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/cars/owner/customer1",
+									"host": ["{{base_url}}"],
+									"path": ["cars", "owner", "customer1"]
+								},
+								"description": "Get cars by owner username - No token required"
+							}
+						},
+						{
+							"name": "Update Car",
+							"request": {
+								"method": "PUT",
+								"header": [{"key": "Content-Type", "value": "application/json"}],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"make\": \"Toyota\",\n  \"model\": \"Camry\",\n  \"year\": 2023,\n  \"color\": \"Red\",\n  \"carType\": \"SEDAN\",\n  \"customerUsername\": \"customer1\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/cars/ABC123",
+									"host": ["{{base_url}}"],
+									"path": ["cars", "ABC123"]
+								},
+								"description": "Update car details - No token required"
+							}
+						}
+					]
+				},
+				{
+					"name": "Order Service",
+					"item": [
+						{
+							"name": "Create Order (Admin)",
+							"request": {
+								"method": "POST",
+								"header": [
+									{"key": "Content-Type", "value": "application/json"},
+									{"key": "Authorization", "value": "Bearer {{admin_token}}"}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"licensePlate\": \"ABC123\",\n  \"serviceType\": \"FULL_WASH\",\n  \"totalAmount\": 100.00,\n  \"scheduledTime\": \"2024-12-25T10:00:00\",\n  \"location\": \"123 Main St\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/orders",
+									"host": ["{{base_url}}"],
+									"path": ["orders"]
+								},
+								"description": "Create new order - ADMIN token required (customerUsername auto-extracted from token)"
+							}
+						},
+						{
+							"name": "Get All Orders",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/orders",
+									"host": ["{{base_url}}"],
+									"path": ["orders"]
+								},
+								"description": "Get all orders (admin function) - No token required"
+							}
+						},
+						{
+							"name": "Get Order by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/orders/1",
+									"host": ["{{base_url}}"],
+									"path": ["orders", "1"]
+								},
+								"description": "Get order by ID - No token required"
+							}
+						},
+						{
+							"name": "Get Orders by Customer (Admin)",
+							"request": {
+								"method": "GET",
+								"header": [
+									{"key": "Authorization", "value": "Bearer {{admin_token}}"}
+								],
+								"url": {
+									"raw": "{{base_url}}/orders/customer",
+									"host": ["{{base_url}}"],
+									"path": ["orders", "customer"]
+								},
+								"description": "Get my orders - ADMIN token required (username auto-extracted from token)"
+							}
+						},
+						{
+							"name": "Get Orders by Washer (Admin)",
+							"request": {
+								"method": "GET",
+								"header": [
+									{"key": "Authorization", "value": "Bearer {{admin_token}}"}
+								],
+								"url": {
+									"raw": "{{base_url}}/orders/washer",
+									"host": ["{{base_url}}"],
+									"path": ["orders", "washer"]
+								},
+								"description": "Get washer orders - ADMIN token required (username auto-extracted from token)"
+							}
+						},
+						{
+							"name": "Update Order Status",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/orders/1/status?status=COMPLETED",
+									"host": ["{{base_url}}"],
+									"path": ["orders", "1", "status"],
+									"query": [{"key": "status", "value": "COMPLETED"}]
+								},
+								"description": "Update order status - No token required"
+							}
+						},
+						{
+							"name": "Assign Washer to Order",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/orders/1/assign?washerUsername=washer1",
+									"host": ["{{base_url}}"],
+									"path": ["orders", "1", "assign"],
+									"query": [{"key": "washerUsername", "value": "washer1"}]
+								},
+								"description": "Assign washer to order - No token required"
+							}
+						}
+					]
+				},
+				{
+					"name": "Payment Service",
+					"item": [
+						{
+							"name": "Get All Payments by Customer (Admin)",
+							"request": {
+								"method": "GET",
+								"header": [
+									{"key": "Authorization", "value": "Bearer {{admin_token}}"}
+								],
+								"url": {
+									"raw": "{{base_url}}/payments/customer",
+									"host": ["{{base_url}}"],
+									"path": ["payments", "customer"]
+								},
+								"description": "Get my payments - ADMIN token required (username auto-extracted from token)"
+							}
+						},
+						{
+							"name": "Get Payment by Order ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/payments/order/1",
+									"host": ["{{base_url}}"],
+									"path": ["payments", "order", "1"]
+								},
+								"description": "Get payment by order ID - No token required"
+							}
+						},
+						{
+							"name": "Refund Payment",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/payments/1/refund",
+									"host": ["{{base_url}}"],
+									"path": ["payments", "1", "refund"]
+								},
+								"description": "Refund payment - No token required"
+							}
+						},
+						{
+							"name": "Download Receipt",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/payments/1/receipt",
+									"host": ["{{base_url}}"],
+									"path": ["payments", "1", "receipt"]
+								},
+								"description": "Download payment receipt PDF - No token required"
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "CUSTOMER Role",
+			"description": "Endpoints requiring CUSTOMER role token",
+			"item": [
+				{
+					"name": "Auth Service",
+					"item": [
+						{
+							"name": "Delete My Account",
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{"key": "Authorization", "value": "Bearer {{customer_token}}"}
+								],
+								"url": {
+									"raw": "{{base_url}}/api/auth/delete",
+									"host": ["{{base_url}}"],
+									"path": ["api", "auth", "delete"]
+								},
+								"description": "Customer deletes own account - CUSTOMER token required (username auto-extracted from token)"
+							}
+						}
+					]
+				},
+				{
+					"name": "Car Service",
+					"item": [
+						{
+							"name": "Register Car",
+							"request": {
+								"method": "POST",
+								"header": [
+									{"key": "Content-Type", "value": "application/json"},
+									{"key": "Authorization", "value": "Bearer {{customer_token}}"}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"licensePlate\": \"XYZ789\",\n  \"make\": \"Honda\",\n  \"model\": \"Civic\",\n  \"year\": 2021,\n  \"color\": \"Black\",\n  \"type\": \"SEDAN\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/cars",
+									"host": ["{{base_url}}"],
+									"path": ["cars"]
+								},
+								"description": "Register new car - CUSTOMER token required (customerUsername auto-extracted from token)"
+							}
+						},
+						{
+							"name": "Get My Cars",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/cars/owner/customer1",
+									"host": ["{{base_url}}"],
+									"path": ["cars", "owner", "customer1"]
+								},
+								"description": "Get cars by owner - No token required"
+							}
+						}
+					]
+				},
+				{
+					"name": "Order Service",
+					"item": [
+						{
+							"name": "Create Order",
+							"request": {
+								"method": "POST",
+								"header": [
+									{"key": "Content-Type", "value": "application/json"},
+									{"key": "Authorization", "value": "Bearer {{customer_token}}"}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"licensePlate\": \"XYZ789\",\n  \"serviceType\": \"BASIC_WASH\",\n  \"totalAmount\": 50.00,\n  \"scheduledTime\": \"2024-12-26T14:00:00\",\n  \"location\": \"456 Oak Ave\"\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/orders",
+									"host": ["{{base_url}}"],
+									"path": ["orders"]
+								},
+								"description": "Create new order - CUSTOMER token required (customerUsername auto-extracted from token)"
+							}
+						},
+						{
+							"name": "Get My Orders",
+							"request": {
+								"method": "GET",
+								"header": [
+									{"key": "Authorization", "value": "Bearer {{customer_token}}"}
+								],
+								"url": {
+									"raw": "{{base_url}}/orders/customer",
+									"host": ["{{base_url}}"],
+									"path": ["orders", "customer"]
+								},
+								"description": "Get my orders - CUSTOMER token required (username auto-extracted from token)"
+							}
+						}
+					]
+				},
+				{
+					"name": "Payment Service",
+					"item": [
+						{
+							"name": "Create Checkout Session",
+							"request": {
+								"method": "POST",
+								"header": [
+									{"key": "Content-Type", "value": "application/json"},
+									{"key": "Authorization", "value": "Bearer {{customer_token}}"}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"orderId\": 1,\n  \"amount\": 50.00\n}"
+								},
+								"url": {
+									"raw": "{{base_url}}/payments/create-checkout-session",
+									"host": ["{{base_url}}"],
+									"path": ["payments", "create-checkout-session"]
+								},
+								"description": "Create Stripe checkout session - CUSTOMER token required (customerUsername auto-extracted from token)"
+							}
+						},
+						{
+							"name": "Get My Payments",
+							"request": {
+								"method": "GET",
+								"header": [
+									{"key": "Authorization", "value": "Bearer {{customer_token}}"}
+								],
+								"url": {
+									"raw": "{{base_url}}/payments/customer",
+									"host": ["{{base_url}}"],
+									"path": ["payments", "customer"]
+								},
+								"description": "Get my payments - CUSTOMER token required (username auto-extracted from token)"
+							}
+						},
+						{
+							"name": "Create Payment Intent",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/payments/client-secret?amount=50.00",
+									"host": ["{{base_url}}"],
+									"path": ["payments", "client-secret"],
+									"query": [{"key": "amount", "value": "50.00"}]
+								},
+								"description": "Create payment intent - No token required"
+							}
+						},
+						{
+							"name": "Download Invoice",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/payments/1/receipt",
+									"host": ["{{base_url}}"],
+									"path": ["payments", "1", "receipt"]
+								},
+								"description": "Download professional invoice PDF - No token required"
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "WASHER Role",
+			"description": "Endpoints requiring WASHER role token",
+			"item": [
+				{
+					"name": "Order Service",
+					"item": [
+						{
+							"name": "Get My Assigned Orders",
+							"request": {
+								"method": "GET",
+								"header": [
+									{"key": "Authorization", "value": "Bearer {{washer_token}}"}
+								],
+								"url": {
+									"raw": "{{base_url}}/orders/washer",
+									"host": ["{{base_url}}"],
+									"path": ["orders", "washer"]
+								},
+								"description": "Get my assigned orders - WASHER token required (username auto-extracted from token)"
+							}
+						},
+						{
+							"name": "Update Order Status",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"url": {
+									"raw": "{{base_url}}/orders/1/status?status=IN_PROGRESS",
+									"host": ["{{base_url}}"],
+									"path": ["orders", "1", "status"],
+									"query": [{"key": "status", "value": "IN_PROGRESS"}]
+								},
+								"description": "Update order status - No token required"
+							}
+						}
+					]
+				}
+			]
+		}
+	]
+}
