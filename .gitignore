@@ -1,0 +1,54 @@
+# ===========================
+# Maven build output
+# ===========================
+**/target/
+**/pom.xml.tag
+**/pom.xml.releaseBackup
+**/pom.xml.versionsBackup
+**/pom.xml.next
+**/release.properties
+**/dependency-reduced-pom.xml
+
+# ===========================
+# Secrets & sensitive config
+# ===========================
+**/application.properties
+**/application.yml
+**/application-*.properties
+**/application-*.yml
+!**/application.properties.example
+!**/application.yml.example
+
+# ===========================
+# IDE files
+# ===========================
+.idea/
+*.iml
+*.iws
+*.ipr
+.vscode/
+*.classpath
+*.project
+*.settings/
+
+# ===========================
+# OS files
+# ===========================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ===========================
+# Node / React frontend
+# ===========================
+carwashmanagement-frontend/node_modules/
+carwashmanagement-frontend/build/
+carwashmanagement-frontend/.env
+carwashmanagement-frontend/.env.local
+carwashmanagement-frontend/.env.production
+
+# ===========================
+# Logs
+# ===========================
+*.log
+logs/

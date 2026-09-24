@@ -1,0 +1,48 @@
+server.port=8080
+spring.application.name=api-gateway
+
+eureka.client.service-url.defaultZone=http://localhost:8761/eureka/
+
+jwt.secret=<JWT_SECRET>
+
+spring.cloud.gateway.routes[0].id=auth-service
+spring.cloud.gateway.routes[0].uri=lb://auth-service
+spring.cloud.gateway.routes[0].predicates[0]=Path=/auth-service/**
+spring.cloud.gateway.routes[0].filters[0]=RewritePath=/auth-service/(?<segment>.*), /${segment}
+
+spring.cloud.gateway.routes[1].id=car-service
+spring.cloud.gateway.routes[1].uri=lb://car-service
+spring.cloud.gateway.routes[1].predicates[0]=Path=/car-service/**
+spring.cloud.gateway.routes[1].filters[0]=RewritePath=/car-service/(?<segment>.*), /${segment}
+
+spring.cloud.gateway.routes[2].id=order-service
+spring.cloud.gateway.routes[2].uri=lb://order-service
+spring.cloud.gateway.routes[2].predicates[0]=Path=/order-service/**
+spring.cloud.gateway.routes[2].filters[0]=RewritePath=/order-service/(?<segment>.*), /${segment}
+
+spring.cloud.gateway.routes[3].id=payment-service
+spring.cloud.gateway.routes[3].uri=lb://payment-service
+spring.cloud.gateway.routes[3].predicates[0]=Path=/payment-service/**
+spring.cloud.gateway.routes[3].filters[0]=RewritePath=/payment-service/(?<segment>.*), /${segment}
+
+spring.cloud.gateway.routes[4].id=auth-service-direct
+spring.cloud.gateway.routes[4].uri=lb://auth-service
+spring.cloud.gateway.routes[4].predicates[0]=Path=/api/auth/**
+
+spring.cloud.gateway.routes[5].id=car-service-direct
+spring.cloud.gateway.routes[5].uri=lb://car-service
+spring.cloud.gateway.routes[5].predicates[0]=Path=/api/cars,/api/cars/**
+spring.cloud.gateway.routes[5].filters[0]=RewritePath=/api/cars/(?<segment>.*), /cars/${segment}
+spring.cloud.gateway.routes[5].filters[1]=RewritePath=/api/cars, /cars
+
+spring.cloud.gateway.routes[6].id=order-service-direct
+spring.cloud.gateway.routes[6].uri=lb://order-service
+spring.cloud.gateway.routes[6].predicates[0]=Path=/api/orders,/api/orders/**
+spring.cloud.gateway.routes[6].filters[0]=RewritePath=/api/orders/(?<segment>.*), /orders/${segment}
+spring.cloud.gateway.routes[6].filters[1]=RewritePath=/api/orders, /orders
+
+spring.cloud.gateway.routes[7].id=payment-service-direct
+spring.cloud.gateway.routes[7].uri=lb://payment-service
+spring.cloud.gateway.routes[7].predicates[0]=Path=/api/payments,/api/payments/**
+spring.cloud.gateway.routes[7].filters[0]=RewritePath=/api/payments/(?<segment>.*), /payments/${segment}
+spring.cloud.gateway.routes[7].filters[1]=RewritePath=/api/payments, /payments
